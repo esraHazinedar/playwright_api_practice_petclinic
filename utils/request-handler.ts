@@ -63,7 +63,9 @@ export class RequestHandler {
             })
             this.cleanupFields()
             const actualStatus = response.status()
+            
             responseJSON = await response.json()
+        
     
             this.logger.logResponse(actualStatus, responseJSON)
             this.statusCodeValidator(actualStatus, statusCode, this.getRequest)
@@ -72,47 +74,7 @@ export class RequestHandler {
         return responseJSON
 
     }
-   async getRequest2(statusCode: number) {
-
-    let responseJSON: any
-
-    let responseHeaders: Record<string, string> = {}
-
-    let actualStatus = 0
-
-    const url = this.getUrl()
-
-    await test.step(`GET request to: ${url}`, async () => {
-
-        this.logger.logRequest('GET', url, this.getHeades())
-
-        const response = await this.request.get(url, {
-            headers: this.getHeades()
-        })
-
-        this.cleanupFields()
-
-        actualStatus = response.status()
-
-        responseJSON = await response.json()
-
-        responseHeaders = response.headers()
-
-        this.logger.logResponse(actualStatus, responseJSON)
-
-        this.statusCodeValidator(
-            actualStatus,
-            statusCode,
-            this.getRequest
-        )
-    })
-
-    return {
-        body: responseJSON,
-        headers: responseHeaders,
-        status: actualStatus
-    }
-}
+  
 
     async postRequest(statusCode: number) {
         let responseJSON: any

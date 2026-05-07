@@ -7,4 +7,8 @@ export function getNewPet(){
     return petRequest
 }
 
-
+export function getUpdatedPet(){
+    const petRequest = structuredClone(petRequestJson)
+    petRequest.name = faker.animal.cow()
+    return petRequest
+}

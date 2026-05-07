@@ -25,10 +25,10 @@ test.describe('Automate individual GET edpoints', () => {
 
         const vetResponse = await api.path('/vets')
             .getRequest(200)
+
         await expect(vetResponse).shouldMatchSchema('vets', 'getVets')
         for (let i = 0; i < vetResponse.length; i++) {
             expect(vetResponse[i].id).not.toBeNull()
-
         }
 
         expect(vetResponse[0].firstName).shouldEqual('James')
@@ -68,7 +68,7 @@ test.describe('Automate individual GET edpoints', () => {
         await expect(petsResponse).shouldMatchSchema('pets', 'getPets')
 
         expect(petsResponse[0].name).shouldEqual('Leo')
-       expect(petsResponse.length).toBeGreaterThan(0)
+        expect(petsResponse.length).toBeGreaterThan(0)
 
     })
 
@@ -167,7 +167,7 @@ test.describe('Automate a sequence for GET endpoints', () => {
             .getRequest(200);
         await expect(singlePetResponse).shouldMatchSchema('pets', 'getPetsSingleObject');
         expect(singlePetResponse.id).shouldEqual(id)
-      
+
 
     })
 

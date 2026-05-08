@@ -4,17 +4,15 @@ import petRequestJson from "../request-objects/POST_pet.json"
 
 import{faker} from '@faker-js/faker'
 
-export function createRandomPetType(){ 
+export function getRandomPetType(){ 
     const petTypeRequest = structuredClone(petTypeRequestJson)
     petTypeRequest.name = faker.animal.horse()
     return petTypeRequest
 }
 
 
-export function createRandomPet(){
+export function getRandomPetName(){
     const petRequest = structuredClone(petRequestJson)
     petRequest.name = faker.person.firstName()
-  
-    
     return petRequest
 }

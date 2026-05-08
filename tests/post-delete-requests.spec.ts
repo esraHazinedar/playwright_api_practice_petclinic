@@ -1,12 +1,12 @@
 import { test } from '../utils/fixtures';
 import { expect } from '../utils/custom-exptect';
-import { createRandomPet, createRandomPetType } from '../utils/data-generator';
+import {  getRandomPetName, getRandomPetType } from '../utils/data-generator';
 
 
 
 test('Test 01 - Create and Delete PetType', async ({ api }) => {
 
-      const petType = createRandomPetType()
+      const petType = getRandomPetType()
       const petTypeName = petType.name;
 
       const createdPetResponse = await api.path('/pettypes')
@@ -46,7 +46,7 @@ test('Test 02 - AddNew Pet to Existing Owner', async ({ api }) => {
       const randomPetId = randomType.id
 
 
-      const pet = createRandomPet()
+      const pet = getRandomPetName()
       const newPetName = pet.name;
       const newPet = {
             ...pet,

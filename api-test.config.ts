@@ -4,13 +4,13 @@ console.log('Test environment is: ' + env)
 
 const config = {
     apiUrl: 'https://petclinic-api.bondaracademy.com/petclinic/api',
-    userEmail: process.env.USERNAME,
-    userPassword: process.env.PASSWORD
+    userEmail: process.env.USERNAME as string,
+    userPassword: process.env.PASSWORD as string
 }
 
 if(env === 'qa'){
-    config.userEmail = '',
-    config.userPassword = ''
+    config.userEmail = process.env.USERNAME as string,
+    config.userPassword = process.env.PASSWORD as string
 }
 if(env === 'prod'){
     config.userEmail = '',

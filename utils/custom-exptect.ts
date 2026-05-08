@@ -14,6 +14,7 @@ declare global {
             shouldEqual(expected: T): R
             shouldBeLessThanOrEqual(expected: T): R
             shouldMatchSchema(dirName: string, fileName: string, createSchemaFlag?: boolean): Promise<R>
+          
         }
     }
 }
@@ -82,7 +83,7 @@ export const expect = baseExpect.extend({
         }
 
         const hint = this.isNot ? 'not' : ''
-        const message = this.utils.matcherHint('shouldBeLessThanOrEqual', undefined, undefined, { isNot: this.isNot }) +
+        const message = this.utils.matcherHint('shouldNotBeNull', undefined, undefined, { isNot: this.isNot }) +
             '\n\n' +
             `Expected: ${hint} ${this.utils.printExpected(expected)}\n` +
             `Received: ${this.utils.printReceived(received)}\n\n` +
@@ -93,4 +94,9 @@ export const expect = baseExpect.extend({
             pass
         };
     }
+
+
+
+
+
 })

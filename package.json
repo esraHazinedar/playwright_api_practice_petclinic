@@ -14,5 +14,8 @@
     "ajv-formats": "^3.0.1",
     "dotenv": "^17.0.1",
     "genson-js": "^0.0.8"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^10.4.0"
   }
 }

@@ -1,0 +1,41 @@
+{
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "firstName": {
+                "type": "string"
+            },
+            "lastName": {
+                "type": "string"
+            },
+            "specialties": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "integer"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "id",
+                        "name"
+                    ]
+                }
+            },
+            "id": {
+                "type": "integer"
+            }
+        },
+        "required": [
+            "firstName",
+            "lastName",
+            "specialties",
+            "id"
+        ]
+    }
+}

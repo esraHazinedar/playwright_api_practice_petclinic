@@ -63,14 +63,18 @@ export class RequestHandler {
             })
             this.cleanupFields()
             const actualStatus = response.status()
+            
             responseJSON = await response.json()
+        
     
             this.logger.logResponse(actualStatus, responseJSON)
             this.statusCodeValidator(actualStatus, statusCode, this.getRequest)
         })
 
         return responseJSON
+
     }
+  
 
     async postRequest(statusCode: number) {
         let responseJSON: any

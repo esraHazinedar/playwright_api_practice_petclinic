@@ -1,0 +1,78 @@
+{
+    "type": "object",
+    "properties": {
+        "firstName": {
+            "type": "string"
+        },
+        "lastName": {
+            "type": "string"
+        },
+        "address": {
+            "type": "string"
+        },
+        "city": {
+            "type": "string"
+        },
+        "telephone": {
+            "type": "string"
+        },
+        "id": {
+            "type": "integer"
+        },
+        "pets": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "birthDate": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "id": {
+                                "type": "integer"
+                            }
+                        },
+                        "required": [
+                            "name",
+                            "id"
+                        ]
+                    },
+                    "id": {
+                        "type": "integer"
+                    },
+                    "ownerId": {
+                        "type": "integer"
+                    },
+                    "visits": {
+                        "type": "array"
+                    }
+                },
+                "required": [
+                    "name",
+                    "birthDate",
+                    "type",
+                    "id",
+                    "ownerId",
+                    "visits"
+                ]
+            }
+        }
+    },
+    "required": [
+        "firstName",
+        "lastName",
+        "address",
+        "city",
+        "telephone",
+        "id",
+        "pets"
+    ]
+}

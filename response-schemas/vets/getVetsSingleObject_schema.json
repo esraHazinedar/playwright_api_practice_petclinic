@@ -1,0 +1,23 @@
+{
+    "type": "object",
+    "properties": {
+        "firstName": {
+            "type": "string"
+        },
+        "lastName": {
+            "type": "string"
+        },
+        "specialties": {
+            "type": "array"
+        },
+        "id": {
+            "type": "integer"
+        }
+    },
+    "required": [
+        "firstName",
+        "lastName",
+        "specialties",
+        "id"
+    ]
+}

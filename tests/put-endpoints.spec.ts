@@ -1,33 +1,31 @@
 import { test } from '../utils/fixtures';
 import { expect } from '../utils/custom-exptect';
-import { getNewPet, getUpdatedPet } from '../utils/data-generator';
+import { generateRandomPetTypeRequest } from '../utils/data-generator';
 
 
 
 test('TEST 01 - Update Pet Type', async ({ api }) => {
-    const petRequest = getNewPet()
-    const petName = petRequest.name;
+    const randomPetType = generateRandomPetTypeRequest()
 
-    const createdPetResponse = await api.path('/pettypes')
-        .body({ "name": petName })
+    const createdPetType = await api.path('/pettypes')
+        .body(randomPetType)
         .postRequest(201);
-    await expect(createdPetResponse).shouldMatchSchema('pettyTypes', 'postSinglePetObject')
-    expect(createdPetResponse.name).shouldEqual(petName)
-    const petId = createdPetResponse.id;
-    const update = getUpdatedPet()
-    const petUpdatedName = update.name;
+    await expect(createdPetType).shouldMatchSchema('pettyTypes', 'postSinglePetObject')
+    expect(createdPetType.name).shouldEqual(randomPetType.name)
+    const petId = createdPetType.id;
+    const updatedPetTypePayload = generateRandomPetTypeRequest()
 
-
-    const updatePetResponse = await api.path(`/pettypes/${petId}`)
-        .body({ "name": petUpdatedName })
+    await api.path(`/pettypes/${petId}`)
+        .body(updatedPetTypePayload)
         .putRequest(204);
 
-    const getPetResponse = await api.path(`/pettypes/${petId}`)
+    const fetchedUpdatedPetType = await api
+        .path(`/pettypes/${petId}`)
         .getRequest(200)
+    expect(fetchedUpdatedPetType.name).shouldEqual(updatedPetTypePayload.name)
 
-    expect(getPetResponse.name).shouldEqual(petUpdatedName)
-
-    const deletePetrequest = await api.path(`/pettypes/${petId}`)
+    const deletePetTypeResponse = await api
+        .path(`/pettypes/${petId}`)
         .deleteRequest(204);
 
 })
@@ -36,43 +34,31 @@ test('TEST 01 - Update Pet Type', async ({ api }) => {
 
 test('TEST 02 - Update Veterinarian Details', async ({ api }) => {
 
-    const getVetResponse = await api.path('/vets')
+    const getVets = await api
+        .path('/vets')
         .getRequest(200);
-    await expect(getVetResponse).shouldMatchSchema('vets', 'getVets')
-    const getFirstVet = getVetResponse[0];
-    const vetFirstSpecialty = getFirstVet.specialties[0];
-    const vetFirstId = getFirstVet.id;
-    const getSpecialtiesResponse = await api.path('/specialties')
+
+    await expect(getVets).shouldMatchSchema('vets', 'getVets')
+    const firstVet = getVets[0];
+    const vetFirstSpecialty = firstVet.specialties || [];
+    const vetId = firstVet.id;
+
+    const getSpecialties = await api
+        .path('/specialties')
         .getRequest(200);
-    await expect(getSpecialtiesResponse).shouldMatchSchema('specialties', 'getSpecialties')
-    const specialties = getSpecialtiesResponse;
-    let currentspec = null;
+    await expect(getSpecialties).shouldMatchSchema('specialties', 'getSpecialties')
+    const specialties = getSpecialties;
+    const newSpecialty = specialties.find(s => !vetFirstSpecialty.some(v => v.id === s.id));
+    const updatedVetPayLoad = { ...firstVet, specialties: [newSpecialty], };
 
-    for (let i = 0; i < specialties.length; i++) {
-        const spec = specialties[i];
-        if (!vetFirstSpecialty || vetFirstSpecialty.length === 0) {
-            currentspec = specialties[0];
-            break;
-        }
-        if (vetFirstSpecialty.id === spec.id) {
-            if (i + 1 < specialties.length) {
-                currentspec = specialties[i + 1];
-            } else {
-                currentspec = specialties[0];
-            }
-            break;
-        }
-    }
-
-    const updatedVet = { ...getFirstVet, specialties: [currentspec], };
-    const putResponse = await api
-        .path(`/vets/${vetFirstId}`)
-        .body(updatedVet)
+    await api
+        .path(`/vets/${vetId}`)
+        .body(updatedVetPayLoad)
         .putRequest(204);
-    const getVetUpdatedResponse = await api.path(`/vets/${vetFirstId}`)
+
+    const updatedVet = await api
+        .path(`/vets/${vetId}`)
         .getRequest(200);
-    expect(getVetUpdatedResponse.specialties[0]).shouldEqual(currentspec)
-
-
+    expect(updatedVet.specialties[0]).shouldEqual(newSpecialty)
 
 })

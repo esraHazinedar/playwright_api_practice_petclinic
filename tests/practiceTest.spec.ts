@@ -8,3 +8,7 @@ test('Sample PetClinic Test', async ({ api }) => {
     expect(ownersResponse[0].firstName).toEqual('George')
     expect(ownersResponse[0].lastName).toEqual('Franklin')
 })
+
+
+
+

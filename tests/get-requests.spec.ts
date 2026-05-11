@@ -14,6 +14,7 @@ test.describe('Automate individual GET edpoints', () => {
     test('Test 02- GET /vets', async ({ api }) => {
         const vetResponse = await api.path('/vets')
             .getRequest(200)
+
         await expect(vetResponse).shouldMatchSchema('vets', 'getVets')
         for (let i = 0; i < vetResponse.length; i++) {
             expect(vetResponse[i].id).not.toBeNull()

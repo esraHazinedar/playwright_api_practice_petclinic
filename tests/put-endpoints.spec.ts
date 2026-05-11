@@ -47,8 +47,8 @@ test('TEST 02 - Update Veterinarian Details', async ({ api }) => {
         .path('/specialties')
         .getRequest(200);
     await expect(getSpecialties).shouldMatchSchema('specialties', 'getSpecialties')
-    const specialties = getSpecialties;
-    const newSpecialty = specialties.find(s => !vetFirstSpecialty.some(v => v.id === s.id));
+    const allAvailableSpecialtiesResponse = getSpecialties;
+    const newSpecialty = allAvailableSpecialtiesResponse.find(s => !vetFirstSpecialty.some(v => v.id === s.id));
     const updatedVetPayLoad = { ...firstVet, specialties: [newSpecialty], };
 
     await api

@@ -9,5 +9,3 @@ export function generateRandomPetTypeRequest(){
     petRequest.name = faker.person.firstName()
     return petRequest
 }
-
-

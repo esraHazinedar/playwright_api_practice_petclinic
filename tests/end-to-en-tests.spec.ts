@@ -14,10 +14,12 @@ test('Test- 01 - Create and Delete Veterinarian', async ({ api }) => {
         lastName: vetSurname,
         specialties: []
     }
+
     const postVetResponse = await api
         .path('/vets')
         .body(vet)
         .postRequest(201)
+    await expect(postVetResponse).shouldMatchSchema('visits', 'postSpecialtiesSingleObject')
     const vetId = postVetResponse.id;
     const createSpecialty = {
         name: "pediatry"
@@ -34,6 +36,7 @@ test('Test- 01 - Create and Delete Veterinarian', async ({ api }) => {
         specialties: [
             { id: specialtyId, name: specialtyName }],
     };
+
     await api
         .path(`/vets/${vetId}`)
         .body(vet)
@@ -41,15 +44,19 @@ test('Test- 01 - Create and Delete Veterinarian', async ({ api }) => {
     let getUpdatedVetResponse = await api
         .path(`/vets/${vetId}`)
         .getRequest(200)
+    await expect(getUpdatedVetResponse).shouldMatchSchema('vets', 'getVetsSingleObject')
     expect(getUpdatedVetResponse.specialties[0].id).shouldEqual(specialtyId)
     expect(getUpdatedVetResponse.specialties[0].name).shouldEqual(specialtyName)
+
     await api
         .path(`/specialties/${specialtyId}`)
         .deleteRequest(204)
     getUpdatedVetResponse = await api.path(`/vets/${vetId}`)
         .body(vet)
         .getRequest(200)
+    await expect(getUpdatedVetResponse).shouldMatchSchema('vets', 'getVetsSingleObject')
     expect(getUpdatedVetResponse.specialties.length).shouldEqual(0)
+
     await api
         .path(`/vets/${vetId}`)
         .deleteRequest(204)
@@ -57,9 +64,9 @@ test('Test- 01 - Create and Delete Veterinarian', async ({ api }) => {
     const getVetsResponse = await api
         .path('/vets')
         .getRequest(200)
-
-    const vetExists = getVetsResponse.some(vet => vet.id === vetId);
-    expect(vetExists).shouldEqual(false)
+    await expect(getVetsResponse).shouldMatchSchema('vets', 'getVets')
+    const isVetExist = getVetsResponse.some(vet => vet.id === vetId);
+    expect(isVetExist).shouldEqual(false)
 
 })
 
@@ -74,10 +81,11 @@ test('Test- 02 -Create owner,pet and visit', async ({ api }) => {
         .postRequest(201)
     expect(createOwnerResponse).shouldMatchSchema('owners', 'postOwner')
     const ownerId = createOwnerResponse.id;
-     
+
     const getCreatedOwnerResponse = await api
         .path(`/owners/${ownerId}`)
         .getRequest(200)
+    expect(getCreatedOwnerResponse).shouldMatchSchema('owners', 'getOwnersSingleObject')
     expect(ownerId).shouldEqual(getCreatedOwnerResponse.id)
     const getpettypesResponse = await api
         .path('/pettypes')
@@ -85,30 +93,32 @@ test('Test- 02 -Create owner,pet and visit', async ({ api }) => {
 
     const randomPetType = getpettypesResponse[Math.floor(Math.random() * getpettypesResponse.length)];
     const newRandomPet = createRandomPet()
-    const postNewPet = {  ...newRandomPet, type: randomPetType, }
+    const postNewPet = { ...newRandomPet, type: randomPetType, }
     const createPetToOwnerResponse = await api
         .path(`/owners/${ownerId}/pets`)
         .body(postNewPet)
         .postRequest(201)
+    expect(createPetToOwnerResponse).shouldMatchSchema('pets', 'postPet')
 
     const petId = createPetToOwnerResponse.id;
     let getUpdatedOwner = await api
         .path(`/owners/${ownerId}`)
         .getRequest(200)
-
+    expect(getUpdatedOwner).shouldMatchSchema('owners', 'getOwnersSingleObject')
     const visitRequestPayLoad = createRandomVisit()
     const createVisitToPetResponse = await api
         .path(`/owners/${ownerId}/pets/${petId}/visits`)
         .body(visitRequestPayLoad)
         .postRequest(201)
-
     expect(createVisitToPetResponse).shouldMatchSchema('visits', 'postsingleVisitObject')
+
     const expectedVisitDate = createVisitToPetResponse.date;
     const expectedVisitDescription = createVisitToPetResponse.description;
 
     getUpdatedOwner = await api
         .path(`/owners/${ownerId}`)
         .getRequest(200)
+    expect(getUpdatedOwner).shouldMatchSchema('owners', 'getOwnersSingleObject')
     const actualVisitDate = getUpdatedOwner.pets[0].visits[0].date;
     const actualVisitDescription = getUpdatedOwner.pets[0].visits[0].description;
     expect(expectedVisitDate).shouldEqual(actualVisitDate)
@@ -124,7 +134,7 @@ test('Test- 02 -Create owner,pet and visit', async ({ api }) => {
         .getRequest(200)
     const visitObjectAfterDeletion = getUpdatedOwner.pets[0].visits;
     expect(visitObjectAfterDeletion).shouldEqual([])
-
+    expect(getUpdatedOwner).shouldMatchSchema('owners', 'getOwnersSingleObject')
     await api
         .path(`/pets/${petId}`)
         .deleteRequest(204)
@@ -132,26 +142,20 @@ test('Test- 02 -Create owner,pet and visit', async ({ api }) => {
     getUpdatedOwner = await api
         .path(`/owners/${ownerId}`)
         .getRequest(200)
+    expect(getUpdatedOwner).shouldMatchSchema('owners', 'getOwnersSingleObject')
     const petObjectAfterDeletion = getUpdatedOwner.pets;
     expect(petObjectAfterDeletion).shouldEqual([])
 
     await api
         .path(`/owners/${ownerId}`)
         .deleteRequest(204)
-    
-    const getOwnersResponse = await api
+
+    await api
         .path(`/owners/${ownerId}`)
         .getRequest(404)
 
 
 
-    //        const getOwnersResponse = await api
-    //         .path(`/owners`)
-    //         .getRequest(200)
-    // const exists = getOwnersResponse.some(
-    //   owner => owner.id === ownerId
-    // );
-    //         expect(exists).toBe(false)
 
 })
 

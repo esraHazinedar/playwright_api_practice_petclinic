@@ -64,7 +64,12 @@ export class RequestHandler {
             this.cleanupFields()
             const actualStatus = response.status()
             
+           if (response.ok()) {
             responseJSON = await response.json()
+        } else {
+            responseJSON = await response.text()
+        }
+
         
     
             this.logger.logResponse(actualStatus, responseJSON)

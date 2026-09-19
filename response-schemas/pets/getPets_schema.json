@@ -1,69 +1,54 @@
 {
-    "type": "array",
-    "items": {
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "birthDate": {
+        "type": "string"
+      },
+      "type": {
         "type": "object",
         "properties": {
-            "name": {
-                "type": "string"
+          "name": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer"
+          }
+        },
+        "required": ["name", "id"]
+      },
+      "id": {
+        "type": "integer"
+      },
+      "ownerId": {
+        "type": "integer"
+      },
+      "visits": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "date": {
+              "type": "string"
             },
-            "birthDate": {
-                "type": "string"
-            },
-            "type": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "id": {
-                        "type": "integer"
-                    }
-                },
-                "required": [
-                    "name",
-                    "id"
-                ]
+            "description": {
+              "type": "string"
             },
             "id": {
-                "type": "integer"
+              "type": "integer"
             },
-            "ownerId": {
-                "type": "integer"
-            },
-            "visits": {
-                "type": "array",
-                "items": {
-                    "type": "object",
-                    "properties": {
-                        "date": {
-                            "type": "string"
-                        },
-                        "description": {
-                            "type": "string"
-                        },
-                        "id": {
-                            "type": "integer"
-                        },
-                        "petId": {
-                            "type": "null"
-                        }
-                    },
-                    "required": [
-                        "date",
-                        "description",
-                        "id",
-                        "petId"
-                    ]
-                }
+            "petId": {
+              "type": "null"
             }
-        },
-        "required": [
-            "name",
-            "birthDate",
-            "type",
-            "id",
-            "ownerId",
-            "visits"
-        ]
-    }
+          },
+          "required": ["date", "description", "id", "petId"]
+        }
+      }
+    },
+    "required": ["name", "birthDate", "type", "id", "ownerId", "visits"]
+  }
 }

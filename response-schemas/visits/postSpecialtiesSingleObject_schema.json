@@ -1,23 +1,18 @@
 {
-    "type": "object",
-    "properties": {
-        "firstName": {
-            "type": "string"
-        },
-        "lastName": {
-            "type": "string"
-        },
-        "specialties": {
-            "type": "array"
-        },
-        "id": {
-            "type": "integer"
-        }
+  "type": "object",
+  "properties": {
+    "firstName": {
+      "type": "string"
     },
-    "required": [
-        "firstName",
-        "lastName",
-        "specialties",
-        "id"
-    ]
+    "lastName": {
+      "type": "string"
+    },
+    "specialties": {
+      "type": "array"
+    },
+    "id": {
+      "type": "integer"
+    }
+  },
+  "required": ["firstName", "lastName", "specialties", "id"]
 }

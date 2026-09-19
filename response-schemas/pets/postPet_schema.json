@@ -1,43 +1,33 @@
 {
-    "type": "object",
-    "properties": {
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "birthDate": {
+      "type": "string"
+    },
+    "type": {
+      "type": "object",
+      "properties": {
         "name": {
-            "type": "string"
-        },
-        "birthDate": {
-            "type": "string"
-        },
-        "type": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                }
-            },
-            "required": [
-                "name",
-                "id"
-            ]
+          "type": "string"
         },
         "id": {
-            "type": "integer"
-        },
-        "ownerId": {
-            "type": "integer"
-        },
-        "visits": {
-            "type": "array"
+          "type": "integer"
         }
+      },
+      "required": ["name", "id"]
     },
-    "required": [
-        "name",
-        "birthDate",
-        "type",
-        "id",
-        "ownerId",
-        "visits"
-    ]
+    "id": {
+      "type": "integer"
+    },
+    "ownerId": {
+      "type": "integer"
+    },
+    "visits": {
+      "type": "array"
+    }
+  },
+  "required": ["name", "birthDate", "type", "id", "ownerId", "visits"]
 }

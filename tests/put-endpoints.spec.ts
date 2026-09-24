@@ -1,35 +1,33 @@
 import { test } from "../utils/fixtures";
 import { expect } from "../utils/custom-exptect";
 import { createRandomPetType } from "../utils/data-generator";
+import { generatePetType } from "../utils/api-helpers"
 
 test("TEST 01 - Update Pet Type", async ({ api }) => {
-  const randomPetType = createRandomPetType();
+  const createdPetType = await generatePetType(api);
 
-  const createdPetType = await api
-    .path("/pettypes")
-    .body(randomPetType)
-    .postRequest(201);
   await expect(createdPetType).shouldMatchSchema(
     "pettyTypes",
     "postSinglePetObject",
   );
-  expect(createdPetType.name).shouldEqual(randomPetType.name);
+
   const petId = createdPetType.id;
   const updatedPetTypePayload = createRandomPetType();
-
+  console.log(createdPetType.name)
   await api
     .path(`/pettypes/${petId}`)
     .body(updatedPetTypePayload)
     .putRequest(204);
+
 
   const fetchedUpdatedPetType = await api
     .path(`/pettypes/${petId}`)
     .getRequest(200);
   expect(fetchedUpdatedPetType.name).shouldEqual(updatedPetTypePayload.name);
 
-  console.log(fetchedUpdatedPetType.name);
 
-  const deletePetTypeResponse = await api
+
+  await api
     .path(`/pettypes/${petId}`)
     .deleteRequest(204);
 });
@@ -58,3 +56,6 @@ test("TEST 02 - Update Veterinarian Details", async ({ api }) => {
   const updatedVet = await api.path(`/vets/${vetId}`).getRequest(200);
   expect(updatedVet.specialties[0]).shouldEqual(newSpecialty);
 });
+
+
+

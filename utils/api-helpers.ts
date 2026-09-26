@@ -1,4 +1,4 @@
-import petRequestPayload from '../request-objects/POST_pet.json'
+import petRequestPayload from "../request-objects/POST_pet.json"
 import petRequestTypePayload from '../request-objects/POST-petType.json'
 import { faker } from '@faker-js/faker'
 import { expect } from "../utils/custom-exptect";

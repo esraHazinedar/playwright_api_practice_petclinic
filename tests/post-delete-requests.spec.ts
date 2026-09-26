@@ -1,22 +1,16 @@
 import { test } from "../utils/fixtures";
 import { expect } from "../utils/custom-exptect";
-import { generatePetType } from "../utils/api-helpers";
-import { generatePetToTheExisitingOwner } from "../utils/api-helpers";
+import { generatePetType,generatePetToTheExisitingOwner } from "../utils/api-helpers";
+
 
 test("Test 01 - Create and Delete PetType", async ({ api }) => {
   const createdPetResponse = await generatePetType(api);
-  await expect(createdPetResponse).shouldMatchSchema(
-    "pettyTypes",
-    "postSinglePetObject",
-  );
+  await expect(createdPetResponse).shouldMatchSchema("pettyTypes",  "postSinglePetObject",true );
   const petTypeId = createdPetResponse.id;
   const petTypeName = createdPetResponse.name;
 
   const getPetResponse = await api.path(`/pettypes/${petTypeId}`).getRequest(200);
-  await expect(getPetResponse).shouldMatchSchema(
-    "pettyTypes",
-    "getPettyTypesSingleObject",
-  );
+  await expect(getPetResponse).shouldMatchSchema("pettyTypes", "getPettyTypesSingleObject");
 
   expect(petTypeId).shouldEqual(getPetResponse.id);
   expect(petTypeName).shouldEqual(getPetResponse.name);
@@ -33,7 +27,7 @@ test("Test 02 - AddNew Pet to Existing Owner", async ({ api }) => {
   const initialCount = firstOwner.pets.length;
 
   const createdNewPetResponse = await generatePetToTheExisitingOwner(api, firstOwner.id);
-  await expect(createdNewPetResponse).shouldMatchSchema("pets", "postPet");
+  await expect(createdNewPetResponse).shouldMatchSchema("pets", "postPetToOwner");
   const newPetId = createdNewPetResponse.id;
   const newPetName = createdNewPetResponse.name;
   let getOwnerAfterResponse = await api
@@ -49,9 +43,7 @@ test("Test 02 - AddNew Pet to Existing Owner", async ({ api }) => {
     .path(`/owners/${firstOwner.id}`)
     .getRequest(200);
 
-  expect(getOwnerAfterResponse.pets.map((p) => p.name)).not.toContain(
-    newPetName,
-  );
+  expect(getOwnerAfterResponse.pets.map((p) => p.name)).not.toContain( newPetName,);
   expect(getOwnerAfterResponse.pets.map((p) => p.id)).not.toContain(newPetId);
   expect(getOwnerAfterResponse.pets.length).shouldEqual(initialCount);
 });

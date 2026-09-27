@@ -6,27 +6,28 @@ import visitRequestJson from "../request-objects/POST_visit.json";
 import specialtiesRequestJson from "../request-objects/POST_specialties.json"
 import { faker } from "@faker-js/faker";
 
-export function getRandomPetTypeData() {
+export function generatePetTypeBody() {
   const petTypeRequest = structuredClone(petTypeRequestJson);
-  petTypeRequest.name = faker.animal.horse();
+  petTypeRequest.name = faker.animal.petName();
   return petTypeRequest;
 }
 
-export function getRandomPetData() {
+export function generatePetBody() {
   const petRequest = structuredClone(petRequestJson);
-  petRequest.name = faker.person.firstName();
+  petRequest.name = faker.animal.petName()
   petRequest.birthDate = faker.date.birthdate().toISOString().split("T")[0];
   return petRequest;
+
 }
 
-export function getRandomVetData() {
+export function generateVetBody() {
   const vetRequest = structuredClone(vetRequestJson);
   vetRequest.firstName = faker.person.firstName();
   vetRequest.lastName = faker.person.lastName();
   return vetRequest;
 }
 
-export function getRandomOwnerData() {
+export function generateOwnerBody() {
   const ownerRequest = structuredClone(ownerRequestJson);
   ownerRequest.firstName = faker.person.firstName();
   ownerRequest.lastName = faker.person.lastName();
@@ -36,7 +37,7 @@ export function getRandomOwnerData() {
   return ownerRequest;
 }
 
-export function getRandomVisitdData() {
+export function generateVisitBody() {
   const visitRequest = structuredClone(visitRequestJson);
   const now = new Date();
   const formattedDate = now.toISOString().split("T")[0];
@@ -47,7 +48,7 @@ export function getRandomVisitdData() {
 }
 
 
-export function getRandomSpecialty(){
+export function generateSpecialtyBody(){
   const specialtyRequest = structuredClone(specialtiesRequestJson)
   specialtyRequest.name = faker.string.alphanumeric(6)
   return specialtyRequest

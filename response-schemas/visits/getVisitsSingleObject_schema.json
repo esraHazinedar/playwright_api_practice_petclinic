@@ -1,23 +1,18 @@
 {
-    "type": "object",
-    "properties": {
-        "date": {
-            "type": "string"
-        },
-        "description": {
-            "type": "string"
-        },
-        "id": {
-            "type": "integer"
-        },
-        "petId": {
-            "type": "integer"
-        }
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string"
     },
-    "required": [
-        "date",
-        "description",
-        "id",
-        "petId"
-    ]
+    "description": {
+      "type": "string"
+    },
+    "id": {
+      "type": "integer"
+    },
+    "petId": {
+      "type": "integer"
+    }
+  },
+  "required": ["date", "description", "id", "petId"]
 }

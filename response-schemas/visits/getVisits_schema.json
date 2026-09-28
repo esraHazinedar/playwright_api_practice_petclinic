@@ -1,27 +1,22 @@
 {
-    "type": "array",
-    "items": {
-        "type": "object",
-        "properties": {
-            "date": {
-                "type": "string",
-                "format":"date"
-            },
-            "description": {
-                "type": "string"
-            },
-            "id": {
-                "type": "integer"
-            },
-            "petId": {
-                "type": "integer"
-            }
-        },
-        "required": [
-            "date",
-            "description",
-            "id",
-            "petId"
-        ]
-    }
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "date": {
+        "type": "string",
+        "format": "date"
+      },
+      "description": {
+        "type": "string"
+      },
+      "id": {
+        "type": "integer"
+      },
+      "petId": {
+        "type": "integer"
+      }
+    },
+    "required": ["date", "description", "id", "petId"]
+  }
 }

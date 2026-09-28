@@ -1,15 +1,12 @@
 {
-    "type": "object",
-    "properties": {
-        "id": {
-            "type": "integer"
-        },
-        "name": {
-            "type": "string"
-        }
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
     },
-    "required": [
-        "id",
-        "name"
-    ]
+    "name": {
+      "type": "string"
+    }
+  },
+  "required": ["id", "name"]
 }
